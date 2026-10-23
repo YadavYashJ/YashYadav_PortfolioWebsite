@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La Bella Cucina – Menu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #fdf6ec;
+      --warm:    #f5e9d3;
+      --brown:   #3b2314;
+      --rust:    #c0522a;
+      --gold:    #d4a84b;
+      --muted:   #7a5c44;
+      --card-bg: #fffaf4;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--brown);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--brown);
+      color: var(--cream);
+      text-align: center;
+      padding: 60px 20px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(212,168,75,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: .75rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero-sub {
+      font-size: .95rem;
+      color: rgba(253,246,236,.65);
+      letter-spacing: .06em;
+      margin-bottom: 28px;
+    }
+    .divider-gold {
+      width: 60px; height: 2px;
+      background: var(--gold);
+      margin: 0 auto;
+    }
+
+    /* ── TABS ── */
+    .tabs-wrap {
+      background: var(--warm);
+      border-bottom: 1px solid rgba(59,35,20,.1);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 1 0 auto;
+      min-width: 90px;
+      padding: 14px 18px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      color: var(--rust);
+      border-bottom-color: var(--rust);
+    }
+
+    /* ── MENU SECTIONS ── */
+    .menu-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 16px 60px;
+    }
+    .section { display: none; animation: fadeUp .35s ease both; }
+    .section.active { display: block; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(16px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      color: var(--rust);
+      margin-bottom: 6px;
+    }
+    .section-desc {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* ── ITEM CARDS ── */
+    .items { display: grid; gap: 14px; }
+
+    .item-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(59,35,20,.08);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      transition: box-shadow .2s, transform .2s;
+      position: relative;
+    }
+    .item-card:hover {
+      box-shadow: 0 6px 24px rgba(59,35,20,.10);
+      transform: translateY(-2px);
+    }
+    .item-info { flex: 1; }
+    .item-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 5px;
+    }
+    .item-desc {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .item-badge {
+      display: inline-block;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-top: 7px;
+    }
+    .badge-veg   { background: #e6f4e7; color: #2e7d32; }
+    .badge-spicy { background: #fdecea; color: #c62828; }
+    .badge-new   { background: #fff3cd; color: #856404; }
+
+    .item-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      min-width: 80px;
+    }
+
+    .item-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--rust);
+      white-space: nowrap;
+    }
+
+    /* ── ADD TO CART BUTTON ── */
+    .add-btn {
+      background: var(--rust);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      white-space: nowrap;
+    }
+    .add-btn:hover { background: #a8441f; transform: scale(1.04); }
+    .add-btn:active { transform: scale(.97); }
+    .add-btn.added {
+      background: #2e7d32;
+      animation: popIn .25s ease;
+    }
+    @keyframes popIn {
+      0%   { transform: scale(.9); }
+      60%  { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── CART FAB ── */
+    .cart-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 200;
+      background: var(--brown);
+      color: var(--cream);
+      border: none;
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: .9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 24px rgba(59,35,20,.35);
+      transition: background .2s, transform .2s;
+    }
+    .cart-fab:hover { background: var(--rust); transform: translateY(-2px); }
+    .cart-fab .fab-icon { font-size: 1.1rem; }
+    .cart-fab .fab-count {
+      background: var(--gold);
+      color: var(--brown);
+      border-radius: 50%;
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    /* ── CART DRAWER ── */
+    .cart-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(59,35,20,.45);
+      z-index: 300;
+    }
+    .cart-overlay.open { display: block; }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: -420px;
+      width: 400px;
+      max-width: 95vw;
+      height: 100%;
+      background: var(--card-bg);
+      z-index: 400;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -8px 0 40px rgba(59,35,20,.18);
+      transition: right .32s cubic-bezier(.4,0,.2,1);
+    }
+    .cart-drawer.open { right: 0; }
+
+    .cart-header {
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid rgba(59,35,20,.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--brown);
+      color: var(--cream);
+    }
+    .cart-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+    }
+    .cart-close {
+      background: none;
+      border: none;
+      color: var(--cream);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background .15s;
+    }
+    .cart-close:hover { background: rgba(255,255,255,.12); }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 12px;
+      color: var(--muted);
+    }
+    .cart-empty .empty-icon { font-size: 2.8rem; opacity: .4; }
+    .cart-empty p { font-size: .88rem; }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--warm);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .ci-info { flex: 1; }
+    .ci-name {
+      font-family: 'Playfair Display', serif;
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 2px;
+    }
+    .ci-price {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .ci-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qty-btn {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid var(--muted);
+      background: none;
+      color: var(--brown);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+      line-height: 1;
+    }
+    .qty-btn:hover { background: var(--rust); border-color: var(--rust); color: #fff; }
+    .qty-num {
+      font-weight: 700;
+      font-size: .9rem;
+      min-width: 18px;
+      text-align: center;
+    }
+    .ci-subtotal {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--rust);
+      font-size: .95rem;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    /* ── CART FOOTER ── */
+    .cart-footer {
+      padding: 18px 20px;
+      border-top: 1px solid rgba(59,35,20,.1);
+      background: var(--warm);
+    }
+    .cart-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+    .summary-row.total {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brown);
+      border-top: 1px solid rgba(59,35,20,.15);
+      padding-top: 10px;
+      margin-top: 2px;
+    }
+    .summary-row.total span:last-child {
+      font-family: 'Playfair Display', serif;
+      color: var(--rust);
+    }
+    .items-count-label { font-size: .78rem; color: var(--muted); margin-bottom: 6px; display: block; }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--rust);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: .92rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .checkout-btn:hover { background: #a8441f; }
+
+    .clear-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 9px;
+      background: none;
+      border: 1.5px solid rgba(59,35,20,.2);
+      color: var(--muted);
+      border-radius: 8px;
+      font-family: 'Jost', sans-serif;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .clear-btn:hover { border-color: var(--rust); color: var(--rust); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 16px;
+      font-size: .78rem;
+      color: var(--muted);
+      border-top: 1px solid rgba(59,35,20,.1);
+      background: var(--warm);
+    }
+    footer strong { color: var(--brown); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--brown);
+      color: var(--cream);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 500;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── SUCCESS MODAL ── */
+    .success-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .35);
+      backdrop-filter: blur(8px);
+      z-index: 600;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-modal.show {
+      display: flex;
+    }
+
+    .success-content {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 28px;
+      padding: 48px 32px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 0 1px rgba(255, 255, 255, 0.5);
+      animation: slideUp .4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .checkmark-circle {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: #2e7d32;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn .5s cubic-bezier(.68, -0.55, .265, 1.55) .2s both;
+    }
+
+    .checkmark {
+      width: 50px;
+      height: 50px;
+      position: relative;
+    }
+
+    .checkmark::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 28px;
+      border: solid white;
+      border-width: 0 4px 4px 0;
+      transform: rotate(45deg);
+      left: 16px;
+      top: 8px;
+      animation: checkAnimation .6s cubic-bezier(.65, 0, .45, 1) .4s both;
+    }
+
+    @keyframes checkAnimation {
+      0% {
+        width: 0;
+        height: 0;
+        border-width: 0 4px 4px 0;
+        left: 16px;
+        top: 8px;
+      }
+      50% {
+        width: 0;
+        height: 28px;
+        left: 16px;
+      }
+      100% {
+        width: 15px;
+        height: 28px;
+        left: 16px;
+        top: 8px;
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .success-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--brown);
+      margin-bottom: 12px;
+    }
+
+    .success-message {
+      font-size: .95rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .success-btn {
+      background: var(--rust);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      font-size: .9rem;
+      letter-spacing: .08em;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .success-btn:hover {
+      background: #a8441f;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-eyebrow">Est. 2010 · Fine Dining</p>
+  <h1>La Bella <em>Cucina</em></h1>
+  <p class="hero-sub">Authentic Italian · Wood-fired · Seasonal</p>
+  <div class="divider-gold"></div>
+</header>
+
+<!-- CATEGORY TABS -->
+<nav class="tabs-wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" onclick="showTab('starters', this)">Starters</button>
+    <button class="tab-btn" onclick="showTab('pasta',    this)">Pasta</button>
+    <button class="tab-btn" onclick="showTab('pizza',    this)">Pizza</button>
+    <button class="tab-btn" onclick="showTab('mains',    this)">Mains</button>
+    <button class="tab-btn" onclick="showTab('desserts', this)">Desserts</button>
+    <button class="tab-btn" onclick="showTab('drinks',   this)">Drinks</button>
+  </div>
+</nav>
+
+<!-- MENU CONTENT -->
+<main class="menu-wrap">
+
+  <!-- STARTERS -->
+  <div id="starters" class="section active">
+    <h2 class="section-title">Starters</h2>
+    <p class="section-desc">Light bites to begin your journey.</p>
+    <div class="items">
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Bruschetta al Pomodoro</div>
+          <div class="item-desc">Toasted sourdough, heirloom tomatoes, fresh basil, extra-virgin olive oil.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Bruschetta al Pomodoro', 320)">+ Add</button>
+          <div class="item-price">₹320</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Burrata &amp; Prosciutto</div>
+          <div class="item-desc">Creamy burrata, aged prosciutto di Parma, rocket leaves, balsamic glaze.</div>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Burrata &amp; Prosciutto', 580)">+ Add</button>
+          <div class="item-price">₹580</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Zuppa di Verdure</div>
+          <div class="item-desc">Rustic seasonal vegetable soup, crusty herb bread on the side.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Zuppa di Verdure', 290)">+ Add</button>
+          <div class="item-price">₹290</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Calamari Fritti</div>
+          <div class="item-desc">Lightly battered squid rings, lemon aioli, fresh parsley.</div>
+          <span class="item-badge badge-new">Chef's Pick</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Calamari Fritti', 440)">+ Add</button>
+          <div class="item-price">₹440</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTA -->
+  <div id="pasta" class="section">
+    <h2 class="section-title">Pasta</h2>
+    <p class="section-desc">Handmade fresh daily in our open kitchen.</p>
+    <div class="items">
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Spaghetti Carbonara</div>
+          <div class="item-desc">Guanciale, egg yolk, Pecorino Romano, black pepper. No cream.</div>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Spaghetti Carbonara', 520)">+ Add</button>
+          <div class="item-price">₹520</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Pappardelle al Ragù</div>
+          <div class="item-desc">Slow-braised beef &amp; pork ragù, 8-hour cook, Parmigiano shavings.</div>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Pappardelle al Ragù', 590)">+ Add</button>
+          <div class="item-price">₹590</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Aglio e Olio</div>
+          <div class="item-desc">Spaghetti, roasted garlic, chilli flakes, toasted breadcrumbs, EVO.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+          <span class="item-badge badge-spicy">Spicy</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Aglio e Olio', 420)">+ Add</button>
+          <div class="item-price">₹420</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Gnocchi al Pesto</div>
+          <div class="item-desc">Pillowy potato gnocchi, classic Genovese basil pesto, toasted pine nuts.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+          <span class="item-badge badge-new">New</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Gnocchi al Pesto', 480)">+ Add</button>
+          <div class="item-price">₹480</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIZZA -->
+  <div id="pizza" class="section">
+    <h2 class="section-title">Pizza</h2>
+    <p class="section-desc">72-hour fermented dough, wood-fired at 450 °C.</p>
+    <div class="items">
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Margherita</div>
+          <div class="item-desc">San Marzano tomato, fior di latte mozzarella, fresh basil, EVO.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Margherita', 450)">+ Add</button>
+          <div class="item-price">₹450</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Diavola</div>
+          <div class="item-desc">Spicy salami, tomato, mozzarella, Calabrian chilli oil.</div>
+          <span class="item-badge badge-spicy">Spicy</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Diavola', 540)">+ Add</button>
+          <div class="item-price">₹540</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Quattro Formaggi</div>
+          <div class="item-desc">Mozzarella, gorgonzola, taleggio, Parmigiano. White base.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Quattro Formaggi', 580)">+ Add</button>
+          <div class="item-price">₹580</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Prosciutto e Rucola</div>
+          <div class="item-desc">Post-bake prosciutto crudo, rocket, shaved Parmigiano, lemon.</div>
+          <span class="item-badge badge-new">Chef's Pick</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Prosciutto e Rucola', 620)">+ Add</button>
+          <div class="item-price">₹620</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAINS -->
+  <div id="mains" class="section">
+    <h2 class="section-title">Mains</h2>
+    <p class="section-desc">Hearty plates, served with seasonal sides.</p>
+    <div class="items">
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Branzino al Forno</div>
+          <div class="item-desc">Whole roasted sea bass, lemon, capers, Taggiasca olives, cherry tomatoes.</div>
+          <span class="item-badge badge-new">Seasonal</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Branzino al Forno', 880)">+ Add</button>
+          <div class="item-price">₹880</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Bistecca alla Griglia</div>
+          <div class="item-desc">250 g grilled ribeye, rosemary butter, roasted potatoes, green salad.</div>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Bistecca alla Griglia', 1100)">+ Add</button>
+          <div class="item-price">₹1,100</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Melanzane alla Parmigiana</div>
+          <div class="item-desc">Layered roasted aubergine, tomato, mozzarella, basil. Comfort classic.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Melanzane alla Parmigiana', 520)">+ Add</button>
+          <div class="item-price">₹520</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div id="desserts" class="section">
+    <h2 class="section-title">Desserts</h2>
+    <p class="section-desc">End on a sweet note.</p>
+    <div class="items">
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Tiramisù Classico</div>
+          <div class="item-desc">Espresso-soaked ladyfingers, mascarpone cream, dark cocoa dusting.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Tiramisù Classico', 320)">+ Add</button>
+          <div class="item-price">₹320</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Panna Cotta</div>
+          <div class="item-desc">Vanilla bean panna cotta, seasonal berry compote, mint.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+          <span class="item-badge badge-new">New</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Panna Cotta', 280)">+ Add</button>
+          <div class="item-price">₹280</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Gelato del Giorno</div>
+          <div class="item-desc">Two scoops of today's house-made gelato. Ask your server for flavours.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Gelato del Giorno', 240)">+ Add</button>
+          <div class="item-price">₹240</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRINKS -->
+  <div id="drinks" class="section">
+    <h2 class="section-title">Drinks</h2>
+    <p class="section-desc">Curated wines, craft cocktails &amp; soft options.</p>
+    <div class="items">
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Aperol Spritz</div>
+          <div class="item-desc">Aperol, Prosecco, soda water, orange slice.</div>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Aperol Spritz', 380)">+ Add</button>
+          <div class="item-price">₹380</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Chianti Classico</div>
+          <div class="item-desc">Glass of house Chianti DOCG, smooth tannins, cherry notes.</div>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Chianti Classico', 420)">+ Add</button>
+          <div class="item-price">₹420</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">San Pellegrino</div>
+          <div class="item-desc">Sparkling mineral water, 500 ml bottle.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'San Pellegrino', 120)">+ Add</button>
+          <div class="item-price">₹120</div>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-info">
+          <div class="item-name">Espresso / Doppio</div>
+          <div class="item-desc">Single or double shot of our house blend, Arabica &amp; Robusta.</div>
+          <span class="item-badge badge-veg">Vegetarian</span>
+        </div>
+        <div class="item-right">
+          <button class="add-btn" onclick="addToCart(this, 'Espresso', 160)">+ Add</button>
+          <div class="item-price">₹160 / ₹220</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>La Bella Cucina</strong> &nbsp;·&nbsp; 12, Corso Venezia, Ahmedabad &nbsp;·&nbsp; +91 79 4000 1234<br>
+  <span style="margin-top:4px;display:block;">Open Tue–Sun &nbsp;12:00 – 15:00 &nbsp;|&nbsp; 19:00 – 23:00</span>
+</footer>
+
+<!-- CART FAB -->
+<button class="cart-fab" id="cartFab" onclick="openCart()" style="display:none;">
+  <span class="fab-icon">🛒</span>
+  <span>My Order</span>
+  <span class="fab-count" id="fabCount">0</span>
+</button>
+
+<!-- CART OVERLAY & DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2>🛒 Your Order</h2>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <span class="empty-icon">🍽️</span>
+      <p>Your cart is empty.<br>Add items from the menu!</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span id="itemsLabel">0 items</span>
+        <span></span>
+      </div>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotalVal">₹0</span>
+      </div>
+      <div class="summary-row">
+        <span>Taxes &amp; charges (5%)</span>
+        <span id="taxVal">₹0</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="totalVal">₹0</span>
+      </div>
+    </div>
+    <button class="checkout-btn" onclick="placeOrder()">Place Order</button>
+    <button class="clear-btn" onclick="clearCart()">Clear all items</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SUCCESS MODAL -->
+<div class="success-modal" id="successModal">
+  <div class="success-content">
+    <div class="checkmark-circle">
+      <div class="checkmark"></div>
+    </div>
+    <h2 class="success-title">Order Placed!</h2>
+    <p class="success-message">Your order has been confirmed. Our team will start preparing it right away.</p>
+    <button class="success-btn" onclick="closeSuccessModal()">Done</button>
+  </div>
+</div>
+
+<script>
+  // ── Tab switching ──
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  // ── Cart state ──
+  let cart = []; // [{ id, name, price, qty }]
+
+  function cartKey(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  }
+
+  function addToCart(btn, name, price) {
+    const key = cartKey(name);
+    const existing = cart.find(i => i.id === key);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({ id: key, name, price, qty: 1 });
+    }
+    // Animate button
+    btn.textContent = '✓ Added';
+    btn.classList.add('added');
+    setTimeout(() => {
+      btn.textContent = '+ Add';
+      btn.classList.remove('added');
+    }, 1200);
+
+    renderCart();
+    showToast(`${name} added!`);
+  }
+
+  function changeQty(id, delta) {
+    const idx = cart.findIndex(i => i.id === id);
+    if (idx === -1) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    renderCart();
+  }
+
+  function clearCart() {
+    cart = [];
+    renderCart();
+  }
+
+  function renderCart() {
+    const container = document.getElementById('cartItems');
+    const empty     = document.getElementById('cartEmpty');
+    const footer    = document.getElementById('cartFooter');
+    const fab       = document.getElementById('cartFab');
+    const fabCount  = document.getElementById('fabCount');
+
+    // Remove old item rows (keep empty placeholder)
+    container.querySelectorAll('.cart-item').forEach(el => el.remove());
+
+    const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const tax      = Math.round(subtotal * 0.05);
+    const total    = subtotal + tax;
+
+    if (cart.length === 0) {
+      empty.style.display = 'flex';
+      footer.style.display = 'none';
+      fab.style.display = 'none';
+    } else {
+      empty.style.display = 'none';
+      footer.style.display = 'block';
+      fab.style.display = 'flex';
+
+      cart.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'cart-item';
+        el.innerHTML = `
+          <div class="ci-info">
+            <div class="ci-name">${item.name}</div>
+            <div class="ci-price">₹${item.price.toLocaleString('en-IN')} each</div>
+          </div>
+          <div class="ci-controls">
+            <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+          </div>
+          <div class="ci-subtotal">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+        `;
+        container.appendChild(el);
+      });
+
+      document.getElementById('itemsLabel').textContent = `${totalQty} item${totalQty !== 1 ? 's' : ''}`;
+      document.getElementById('subtotalVal').textContent = `₹${subtotal.toLocaleString('en-IN')}`;
+      document.getElementById('taxVal').textContent      = `₹${tax.toLocaleString('en-IN')}`;
+      document.getElementById('totalVal').textContent    = `₹${total.toLocaleString('en-IN')}`;
+      fabCount.textContent = totalQty;
+    }
+  }
+
+  function openCart() {
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+  }
+  function closeCart() {
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('open');
+  }
+
+  // Toast
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // Success Modal
+  function placeOrder() {
+    if (cart.length === 0) {
+      showToast('Add items to your order first!');
+      return;
+    }
+    document.getElementById('successModal').classList.add('show');
+    closeCart();
+    clearCart();
+  }
+
+  function closeSuccessModal() {
+    document.getElementById('successModal').classList.remove('show');
+  }
+</script>
+
+</body>
+</html>
