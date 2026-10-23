@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #05070f;
+  --panel: #0b1020;
+  --border: rgba(148, 163, 184, 0.16);
+  --muted: #94a3b8;
+  --blue: #3b82f6;
+  --violet: #8b5cf6;
+  --cyan: #22d3ee;
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
+/* Lenis handles smooth scrolling; keep native behaviour otherwise default. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #e2e8f0;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(139, 92, 246, 0.45); }
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Reusable utilities ---------- */
+.gradient-text {
+  background: linear-gradient(90deg, #60a5fa, #a78bfa 55%, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.7), rgba(11, 16, 32, 0.7));
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 18px 40px -14px rgba(59, 130, 246, 0.35);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+
+/* ---------- Parallax (adapted from Osmo, via 21st.dev) ---------- */
+.parallax { position: relative; width: 100%; }
+.parallax__header { position: relative; z-index: 1; }
+.parallax__visuals {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 520px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.parallax__layers { position: absolute; inset: 0; width: 100%; height: 100%; }
+.parallax__layer-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+/* Unsplash photos are opaque, so blend the layers with masks and a dark/blue tint */
+.parallax__layer-img--back { filter: brightness(0.6) saturate(1.15) hue-rotate(10deg) contrast(1.05);
+  image-rendering: auto; }
+.parallax__layer-img--mid {
+  filter: brightness(0.55) saturate(1.1) hue-rotate(15deg) contrast(1.05);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 15%, #000 70%);
+  mask-image: linear-gradient(to bottom, transparent 15%, #000 70%);
+}
+.parallax__layer-img--front {
+  filter: brightness(0.45) saturate(1.1) hue-rotate(20deg) contrast(1.05);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 62%, #000 92%);
+  mask-image: linear-gradient(to bottom, transparent 62%, #000 92%);
+}
+.parallax__layer-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+.parallax__title {
+  margin: 0;
+  font-size: clamp(3rem, 14vw, 11rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-align: center;
+  background: linear-gradient(180deg, #fff 20%, rgba(147, 197, 253, 0.65));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 6px 28px rgba(59, 130, 246, 0.28);
+}
+.parallax__fade {
+  position: absolute;
+  left: 0; bottom: 0; width: 100%;
+  height: 30%;
+  background: linear-gradient(to top, var(--bg) 4%, rgba(5, 7, 15, 0.6) 45%, transparent);
+  pointer-events: none;
+}
+.parallax__black-line-overflow {
+  position: absolute; left: 0; bottom: -1px; z-index: 5;
+  width: 100%; height: 2px; background: var(--bg);
+}
+.parallax__content { position: relative; z-index: 2; background: var(--bg); }
+
+.osmo-credits { padding: 2rem; text-align: center; color: var(--muted); font-size: 0.875rem; }
+.osmo-credits__p-a { color: var(--cyan); text-decoration: underline; }
