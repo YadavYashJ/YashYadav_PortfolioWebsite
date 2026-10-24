@@ -95,4 +95,3 @@ If the page is blank, the usual cause is `REPO_NAME` in `vite.config.ts` not mat
 ## Credits
 
 Parallax component by [Osmo](https://www.osmo.supply/) via [21st.dev](https://21st.dev). Parallax photos by Unsplash contributors.
-"# YashYadav_PortfolioWebsite" 

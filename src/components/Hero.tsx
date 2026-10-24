@@ -73,8 +73,8 @@ export function Hero() {
 
         <Reveal delay={0.15} className="order-1 flex justify-center md:order-2">
           <div className="relative animate-float">
-            <div aria-hidden className="absolute -inset-3 rounded-full bg-gradient-to-br from-blue-500 via-violet-500 to-cyan-400 opacity-40 blur-lg" />
-            <div className="relative h-56 w-56 overflow-hidden rounded-full border-[3px] border-cyan-200/50 bg-panel p-1 ring-4 ring-violet-500/30 sm:h-64 sm:w-64 lg:h-80 lg:w-80">
+            <div aria-hidden className="absolute -inset-3 rounded-full bg-gradient-to-br from-blue-500 via-violet-500 to-cyan-400 opacity-15 blur-lg" />
+            <div className="relative h-56 w-56 overflow-hidden rounded-full border-2 border-white/20 bg-panel p-1 ring-4 ring-white/5 sm:h-64 sm:w-64 lg:h-80 lg:w-80">
               {imgOk ? (
                 <img
                   src={`${import.meta.env.BASE_URL}profile.jpg`}
